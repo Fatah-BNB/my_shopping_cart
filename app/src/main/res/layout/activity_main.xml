@@ -1,34 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:id="@+id/nav_bar">
+
+        <TextView
+            android:id="@+id/total_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:padding="5dp"
+            android:text="items"
+            android:textSize="20dp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toStartOf="@id/add_new_item"
+            android:layout_toEndOf="@id/total_items"
+            android:alpha="0.3"
+            app:dividerColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/delete_all_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_delete" />
+
+        <LinearLayout
+            android:id="@+id/add_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toStartOf="@id/delete_all_btn"
+            android:background="@drawable/add_btn_drawable"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="New item"
+                android:textAppearance="@style/ShapeAppearance.Material3.LargeComponent"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item"/>
+        android:layout_above="@id/total_price"
+        android:layout_below="@id/nav_bar"
+        tools:listitem="@layout/item" />
+
     <TextView
-        android:id="@+id/total_items"
-        android:background="@color/fancy_blue"
-        android:layout_width="wrap_content"
+        android:id="@+id/total_price"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="items"
-        android:textColor="@color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:padding="16dp"/>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Total Price : 1200.0 DA"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:fabSize="auto"
-        app:rippleColor="@color/white"
-        android:layout_margin="50dp"
-        android:src="@drawable/ic_add"
-        android:backgroundTint="@color/fancy_blue"
-        android:tint="@android:color/white"
-        android:layout_gravity="bottom|end"
-        android:contentDescription="add new item" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="No items, add some :)"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/history_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_history" />
+
+    <ImageView
+        android:id="@+id/settings_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_settings" />
+
+</RelativeLayout>

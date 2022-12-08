@@ -29,8 +29,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Item currentItem = items.get(position);
         holder.itemName.setText(currentItem.getName());
+        holder.itemPrice.setText(String.valueOf(currentItem.getPrice())+" DA");
         holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
+        holder.itemTotalPrice.setText(String.valueOf(currentItem.getTotalPrice())+" DA");
         holder.itemCard.setBackgroundColor(currentItem.getColor());
+        holder.itemQnt.setOnClickListener(view -> {
+            if (currentItem.getQuantity()>1) {
+                currentItem.setQuantity(currentItem.getQuantity() - 1);
+                MainActivity.itemViewModel.updateItem(currentItem);
+            } else {
+                MainActivity.itemViewModel.deleteItem(currentItem);
+            }
+            holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
+
+        });
     }
 
     @Override
@@ -48,12 +60,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     }
 
     class ItemHolder extends RecyclerView.ViewHolder{
-        private TextView itemName, itemQnt;
+        private TextView itemName, itemQnt, itemPrice, itemTotalPrice;
         private RelativeLayout itemCard;
         public ItemHolder(View itemView){
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemQnt = itemView.findViewById(R.id.item_qnt);
+            itemPrice = itemView.findViewById(R.id.item_price);
+            itemTotalPrice = itemView.findViewById(R.id.total_price);
             itemCard = itemView.findViewById(R.id.item_card);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

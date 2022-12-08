@@ -25,4 +25,6 @@ public interface ItemDao {
     LiveData<List<Item>> getAllItemsBasedOnQnt(int qnt);
     @Query("SELECT COUNT(*) FROM items_table")
     LiveData<Integer> getTotalItems();
+    @Query("SELECT SUM(quantity * price) FROM items_table")
+    LiveData<Double> getTotalPrice();
 }

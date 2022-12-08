@@ -34,10 +34,10 @@ public abstract class ItemsDatabase extends RoomDatabase {
         private PopulateTask(ItemsDatabase db){itemDao = db.useItemDao();}
         @Override
         protected Void doInBackground(Void... voids) {
-            itemDao.insert(new Item("Sugar 1KG", 1, Color.BLACK));
-            itemDao.insert(new Item("Oil 1L", 10, Color.BLACK));
-            itemDao.insert(new Item("Lemonade 2L", 3, Color.BLACK));
-            itemDao.insert(new Item("MAXON GATO", 5, Color.BLACK));
+            itemDao.insert(new Item("Sugar 1KG", 1, 100, Color.BLACK));
+            itemDao.insert(new Item("Oil 1L", 10, 135, Color.BLACK));
+            itemDao.insert(new Item("Lemonade 2L", 3, 150, Color.BLACK));
+            itemDao.insert(new Item("MAXON GATO", 5, 100, Color.BLACK));
             return null;
         }
     }

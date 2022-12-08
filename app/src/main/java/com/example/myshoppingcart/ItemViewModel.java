@@ -13,12 +13,14 @@ public class ItemViewModel extends AndroidViewModel {
     private LiveData<List<Item>> allItems;
     private LiveData<List<Item>> allItemsQnt;
     private LiveData<Integer> totalItems;
+    private LiveData<Double> totalPrice;
 
     public ItemViewModel(@NonNull Application application) {
         super(application);
         repository = new ItemsRepo(application);
         allItems = repository.getAllItems();
         totalItems = repository.getTotalItems();
+        totalPrice = repository.getTotalPrice();
     }
     public void insertItem(Item itm){
         repository.insert(itm);
@@ -41,5 +43,8 @@ public class ItemViewModel extends AndroidViewModel {
     }
     public LiveData<Integer> getTotalItems() {
         return totalItems;
+    }
+    public LiveData<Double> getTotalPrice() {
+        return totalPrice;
     }
 }

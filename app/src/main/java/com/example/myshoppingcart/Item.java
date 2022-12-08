@@ -9,16 +9,28 @@ public class Item {
     private int id;
     private String name;
     private int quantity;
+    private double price;
+    private double totalPrice;
     private int color;
 
-    public Item(String name, int quantity, int color) {
+    public Item(String name, int quantity, double price, int color) {
         this.name = name;
         this.quantity = quantity;
+        this.price = price;
         this.color = color;
+        this.totalPrice = price * quantity;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getId() {
@@ -31,6 +43,14 @@ public class Item {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
     public int getColor() {

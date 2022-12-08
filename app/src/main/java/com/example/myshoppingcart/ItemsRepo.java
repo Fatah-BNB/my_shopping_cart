@@ -12,12 +12,14 @@ public class ItemsRepo {
     private LiveData<List<Item>> allItems;
     private LiveData<List<Item>> allItemsQnt;
     private LiveData<Integer> totalItems;
+    private LiveData<Double> totalPrice;
 
     public ItemsRepo(Application application){
         ItemsDatabase database = ItemsDatabase.getInstance(application);
         itemDao = database.useItemDao();
         allItems = itemDao.getAllItems();
         totalItems = itemDao.getTotalItems();
+        totalPrice = itemDao.getTotalPrice();
     }
 
     public void insert(Item item){
@@ -42,6 +44,9 @@ public class ItemsRepo {
     }
     public LiveData<Integer> getTotalItems() {
         return totalItems;
+    }
+    public LiveData<Double> getTotalPrice() {
+        return totalPrice;
     }
 
     private static class InsertAsync extends AsyncTask<Item, Void, Void>{

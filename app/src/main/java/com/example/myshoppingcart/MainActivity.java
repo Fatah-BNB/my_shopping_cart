@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public static final int ADD_ITEM_REQUEST = 1;
     public static final int EDIT_ITEM_REQUEST = 2;
-    private ItemViewModel itemViewModel;
+    static ItemViewModel itemViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView totalItems = findViewById(R.id.total_items);
+        TextView totalPrice = findViewById(R.id.total_price);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -50,11 +51,29 @@ public class MainActivity extends AppCompatActivity {
         itemViewModel.getTotalItems().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer total) {
-                totalItems.setText(String.valueOf(total));
+                if(total == 0){totalItems.setText("No items");findViewById(R.id.empty).setVisibility(View.VISIBLE);}
+                else if (total == 1){totalItems.setText("One item");findViewById(R.id.empty).setVisibility(View.GONE);}
+                else{totalItems.setText(String.valueOf(total)+" items");findViewById(R.id.empty).setVisibility(View.GONE);}
             }
         });
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.delete_all_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemViewModel.deleteAllItems();
+                Toast.makeText(MainActivity.this, "all items deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        itemViewModel.getTotalPrice().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double totalPriceValue) {
+                if (totalPriceValue == null){totalPriceValue = 0.0;}
+                totalPrice.setText("Total Price : "+totalPriceValue+" DA");
+            }
+        });
+
+        findViewById(R.id.add_new_item).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivityForResult(new Intent(MainActivity.this, AddActivity.class), ADD_ITEM_REQUEST);
@@ -79,17 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 intent.putExtra(AddActivity.EXTRA_ID, item.getId());
                 intent.putExtra(AddActivity.EXTRA_NAME, item.getName());
+                intent.putExtra(AddActivity.EXTRA_PRICE, item.getPrice());
                 intent.putExtra(AddActivity.EXTRA_QNT, item.getQuantity());
 
                 startActivityForResult(intent, EDIT_ITEM_REQUEST);
-            }
-        });
-
-        totalItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemViewModel.deleteAllItems();
-                Toast.makeText(MainActivity.this, "All items deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,25 +111,27 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK){
             String itemName = data.getStringExtra(AddActivity.EXTRA_NAME);
+            double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
             int itemQnt = data.getIntExtra(AddActivity.EXTRA_QNT, 1);
 
-            Item item = new Item(itemName, itemQnt, Color.BLACK);
+            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK);
             itemViewModel.insertItem(item);
             Toast.makeText(this, "item added", Toast.LENGTH_SHORT).show();
         } else if(requestCode == EDIT_ITEM_REQUEST && resultCode == RESULT_OK){
             int itemId = data.getIntExtra(AddActivity.EXTRA_ID, -1);
             String itemName = data.getStringExtra(AddActivity.EXTRA_NAME);
+            double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
             int itemQnt = data.getIntExtra(AddActivity.EXTRA_QNT, 1);
             if(itemId == -1){
                 Toast.makeText(this, "can't update item", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Item item = new Item(itemName, itemQnt, Color.BLACK);
+            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK);
             item.setId(itemId);
             itemViewModel.updateItem(item);
-            Toast.makeText(this, "item updated", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "item updated", Toast.LENGTH_SHORT).show();
         } else{
-            Toast.makeText(this, "item not saved", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "item not saved", Toast.LENGTH_SHORT).show();
         }
     }
 }
