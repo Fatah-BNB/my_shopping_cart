@@ -29,7 +29,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Item currentItem = items.get(position);
         holder.itemName.setText(currentItem.getName());
-        holder.itemPrice.setText(String.valueOf(currentItem.getPrice())+" DA");
+//        holder.itemPrice.setText(String.valueOf(currentItem.getPrice())+" DA");
         holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
         holder.itemTotalPrice.setText(String.valueOf(currentItem.getTotalPrice())+" DA");
         holder.itemCard.setBackgroundColor(currentItem.getColor());
@@ -66,7 +66,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
             super(itemView);
             itemName = itemView.findViewById(R.id.item_name);
             itemQnt = itemView.findViewById(R.id.item_qnt);
-            itemPrice = itemView.findViewById(R.id.item_price);
+//            itemPrice = itemView.findViewById(R.id.item_price);
             itemTotalPrice = itemView.findViewById(R.id.total_price);
             itemCard = itemView.findViewById(R.id.item_card);
             itemView.setOnClickListener(new View.OnClickListener() {
