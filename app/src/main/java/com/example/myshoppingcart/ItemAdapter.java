@@ -4,12 +4,15 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +64,32 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
     class ItemHolder extends RecyclerView.ViewHolder{
         private TextView itemName, itemQnt, itemPrice, itemTotalPrice;
+        private ImageView cart, dots;
         private RelativeLayout itemCard;
         public ItemHolder(View itemView){
             super(itemView);
+            cart = itemView.findViewById(R.id.cart_img);
+            dots = itemView.findViewById(R.id.dots);
+            dots.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(MainActivity.root ,"Coming soon", Snackbar.LENGTH_SHORT)
+                            .setAction("CLOSE", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            })
+                            .show();
+                }
+            });
+            cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    MainActivity.itemViewModel.deleteItem(items.get(getAdapterPosition()));
+                }
+            });
             itemName = itemView.findViewById(R.id.item_name);
             itemQnt = itemView.findViewById(R.id.item_qnt);
 //            itemPrice = itemView.findViewById(R.id.item_price);

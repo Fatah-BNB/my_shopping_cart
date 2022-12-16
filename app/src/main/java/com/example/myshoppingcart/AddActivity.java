@@ -60,6 +60,8 @@ public class AddActivity extends AppCompatActivity {
                     Toast.makeText(AddActivity.this, "provide a name and a unit price for the item", Toast.LENGTH_SHORT).show();
                 }else if (Double.parseDouble(itemPrice.getText().toString().trim()) == 0.0) {
                     Toast.makeText(AddActivity.this, "price can't be 0.0", Toast.LENGTH_SHORT).show();
+                }else{
+                    saveItem();
                 }
 //                else{
 //                    AmbilWarnaDialog dialog = new AmbilWarnaDialog(AddActivity.this, 0xff000000, true, new AmbilWarnaDialog.OnAmbilWarnaListener() {
