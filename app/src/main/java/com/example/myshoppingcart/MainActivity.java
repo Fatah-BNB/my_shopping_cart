@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Double totalPriceValue) {
                 if (totalPriceValue == null){totalPriceValue = 0.0;}
-                totalPrice.setText("Total Price : "+totalPriceValue+" DA");
+                totalPrice.setText(" ∙ "+totalPriceValue+" DA");
             }
         });
 
