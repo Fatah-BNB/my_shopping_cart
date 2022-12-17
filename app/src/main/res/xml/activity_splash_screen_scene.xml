@@ -22,7 +22,8 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             android:scaleX="10"
-            android:scaleY="10" />
+            android:scaleY="10"
+            motion:transitionEasing="cubic(0.2,0,0.79,1)" />
         <Constraint
             android:id="@+id/blueCart"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +57,8 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             android:scaleX="0"
-            android:scaleY="0" />
+            android:scaleY="0"
+            motion:transitionEasing="cubic(0.24,0,0.69,0.99)" />
         <Constraint
             android:id="@+id/blueCart"
             motion:layout_constraintEnd_toEndOf="parent"

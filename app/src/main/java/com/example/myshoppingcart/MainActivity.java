@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
@@ -56,9 +55,15 @@ public class MainActivity extends AppCompatActivity {
         itemViewModel.getTotalItems().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer total) {
-                if(total == 0){totalItems.setText("No items");findViewById(R.id.empty).setVisibility(View.VISIBLE);}
-                else if (total == 1){totalItems.setText("One item");findViewById(R.id.empty).setVisibility(View.GONE);}
-                else{totalItems.setText(String.valueOf(total)+" items");findViewById(R.id.empty).setVisibility(View.GONE);}
+                if(total == 0){totalItems.setText("No items");
+//                    findViewById(R.id.empty).setVisibility(View.VISIBLE);
+                }
+                else if (total == 1){totalItems.setText("One item");
+//                    findViewById(R.id.empty).setVisibility(View.GONE);
+                }
+                else{totalItems.setText(String.valueOf(total)+" items");
+//                    findViewById(R.id.empty).setVisibility(View.GONE);
+                }
             }
         });
 
