@@ -22,18 +22,17 @@
         android:id="@+id/blueCart"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/blue_bag"
+        android:src="@drawable/ic_wallet_x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/fancy_blue"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/whiteCart"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/blue_bag"
+        android:src="@drawable/ic_wallet_simple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
