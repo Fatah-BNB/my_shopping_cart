@@ -12,6 +12,7 @@ public class Item {
     private double price;
     private double totalPrice;
     private int color;
+    private boolean isCounted;
 
     public Item(String name, int quantity, double price, int color) {
         this.name = name;
@@ -19,6 +20,7 @@ public class Item {
         this.price = price;
         this.color = color;
         this.totalPrice = price * quantity;
+        isCounted = true;
     }
 
     public void setId(int id) {
@@ -31,6 +33,14 @@ public class Item {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public void setCounted(boolean counted) {
+        isCounted = counted;
+    }
+
+    public boolean isCounted() {
+        return isCounted;
     }
 
     public int getId() {

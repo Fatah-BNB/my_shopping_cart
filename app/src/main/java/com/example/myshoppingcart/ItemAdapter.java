@@ -91,6 +91,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
                 }
             });
             itemName = itemView.findViewById(R.id.item_name);
+            itemName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Item item = items.get(getAdapterPosition());
+                    if (item.isCounted()){item.setCounted(false); itemName.setTextColor(Color.YELLOW);}
+                    else {item.setCounted(true); itemName.setTextColor(Color.WHITE);}
+                    MainActivity.itemViewModel.updateItem(item);
+                }
+            });
             itemQnt = itemView.findViewById(R.id.item_qnt);
 //            itemPrice = itemView.findViewById(R.id.item_price);
             itemTotalPrice = itemView.findViewById(R.id.total_price);
@@ -105,7 +114,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
             });
         }
     }
-    public interface onItemClickListener{
+        public interface onItemClickListener{
         void onItemClick(Item item);
     }
     public void setOnItemClickListener(onItemClickListener listener){
