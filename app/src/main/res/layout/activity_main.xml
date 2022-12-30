@@ -22,8 +22,8 @@
             android:id="@+id/icon_bar"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:tint="@color/fancy_yellow"
-            app:srcCompat="@drawable/blue_bag" />
+            app:srcCompat="@drawable/blue_bag"
+            app:tint="@color/fancy_yellow" />
 
         <TextView
             android:id="@+id/textView"
@@ -42,8 +42,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_toStartOf="@id/add_new_item"
-            android:layout_toEndOf="@id/total_items"
             android:alpha="0.3"
             android:visibility="gone"
             app:dividerColor="@color/black" />
@@ -56,15 +54,23 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_delete" />
 
-
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Empty cart, add new items"
+        android:layout_centerInParent="true"
+        android:textSize="24sp"
+        android:gravity="center"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/total_price"
         android:layout_below="@id/nav_bar"
         android:layout_marginBottom="70dp"
         tools:listitem="@layout/item" />
@@ -96,6 +102,7 @@
             android:id="@+id/total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/total_items"
             android:gravity="center"
             android:text=" ∙ 1200.0 DA"

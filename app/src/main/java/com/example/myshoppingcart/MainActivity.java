@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView totalItems = findViewById(R.id.total_items);
         TextView totalPrice = findViewById(R.id.total_price);
+        TextView empty = findViewById(R.id.empty);
         root = findViewById(R.id.root);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Item> items) {
                 adapter.setItems(items);
+                if(items.isEmpty()){
+                    empty.setVisibility(View.VISIBLE);
+                }else{
+                    empty.setVisibility(View.GONE);
+                }
             }
         });
 
