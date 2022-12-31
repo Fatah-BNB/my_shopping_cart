@@ -31,6 +31,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Item currentItem = items.get(position);
         holder.itemName.setText(currentItem.getName());
+        if (currentItem.isCounted()){
+            holder.ignoredBadge.setVisibility(View.GONE);
+        }else{
+            holder.ignoredBadge.setVisibility(View.VISIBLE);
+        }
 //        holder.itemPrice.setText(String.valueOf(currentItem.getPrice())+" DA");
         holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
         holder.itemTotalPrice.setText(String.valueOf(currentItem.getTotalPrice())+" DA");
@@ -45,6 +50,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
             holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
 
         });
+        holder.cart.setOnClickListener(view -> {
+                    if (currentItem.isCounted()){currentItem.setCounted(false); holder.ignoredBadge.setVisibility(View.VISIBLE);}
+                    else {currentItem.setCounted(true); holder.ignoredBadge.setVisibility(View.GONE);}
+                    MainActivity.itemViewModel.updateItem(currentItem);
+                });
     }
 
     @Override
@@ -62,12 +72,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
     }
 
     class ItemHolder extends RecyclerView.ViewHolder{
-        private TextView itemName, itemQnt, itemPrice, itemTotalPrice;
+        private TextView itemName, itemQnt, itemPrice, itemTotalPrice, ignoredBadge;
         private ImageView cart, dots;
         private RelativeLayout itemCard;
         public ItemHolder(View itemView){
             super(itemView);
             cart = itemView.findViewById(R.id.cart_img);
+            ignoredBadge = itemView.findViewById(R.id.ignored_badge);
             dots = itemView.findViewById(R.id.dots);
             dots.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,23 +93,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
                             .show();
                 }
             });
-            cart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    MainActivity.itemViewModel.deleteItem(items.get(getAdapterPosition()));
-                }
-            });
             itemName = itemView.findViewById(R.id.item_name);
-            itemName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Item item = items.get(getAdapterPosition());
-                    if (item.isCounted()){item.setCounted(false); itemName.setTextColor(Color.YELLOW);}
-                    else {item.setCounted(true); itemName.setTextColor(Color.WHITE);}
-                    MainActivity.itemViewModel.updateItem(item);
-                }
-            });
             itemQnt = itemView.findViewById(R.id.item_qnt);
 //            itemPrice = itemView.findViewById(R.id.item_price);
             itemTotalPrice = itemView.findViewById(R.id.total_price);

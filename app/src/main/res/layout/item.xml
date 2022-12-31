@@ -110,6 +110,23 @@
             android:layout_marginEnd="2dp"
             app:srcCompat="@drawable/ic_baseline_more_horiz_24" />
 
+        <TextView
+            android:id="@+id/ignored_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="ignored"
+            android:textColor="@color/black"
+            android:textSize="8sp"
+            android:background="@drawable/ignored_badge"
+            android:gravity="center"
+            android:layout_toStartOf="@id/dots"
+            android:layout_marginTop="5dp"/>
+
         <LinearLayout
             android:id="@+id/unit_price"
             android:layout_width="wrap_content"
