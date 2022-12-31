@@ -13,12 +13,14 @@ public class Item {
     private double totalPrice;
     private int color;
     private boolean isCounted;
+    private String list;
 
-    public Item(String name, int quantity, double price, int color) {
+    public Item(String name, int quantity, double price, int color, String list) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.color = color;
+        this.list = list;
         this.totalPrice = price * quantity;
         isCounted = true;
     }
@@ -33,6 +35,10 @@ public class Item {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public void setList(String list) {
+        this.list = list;
     }
 
     public void setCounted(boolean counted) {
@@ -65,5 +71,9 @@ public class Item {
 
     public int getColor() {
         return color;
+    }
+
+    public String getList() {
+        return list;
     }
 }

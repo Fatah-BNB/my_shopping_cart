@@ -21,6 +21,10 @@ public interface ItemDao {
     void deleteAll();
     @Query("SELECT * FROM items_table")
     LiveData<List<Item>> getAllItems();
+    @Query("SELECT DISTINCT list FROM items_table")
+    LiveData<List<String>> getLists();
+    @Query("SELECT * FROM items_table WHERE list = :list")
+    LiveData<List<Item>> getItemsByList(String list);
     @Query("SELECT * FROM items_table WHERE quantity = :qnt")
     LiveData<List<Item>> getAllItemsBasedOnQnt(int qnt);
     @Query("SELECT COUNT(*) FROM items_table")

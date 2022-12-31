@@ -24,7 +24,8 @@ public class AddActivity extends AppCompatActivity {
     public static final String EXTRA_NAME = "ITEM_NAME";
     public static final String EXTRA_QNT = "ITEM_QNT";
     public static final String EXTRA_PRICE = "ITEM_PRICE";
-    private EditText itemName, itemPrice;
+    public static final String EXTRA_LIST = "ITEM_LIST";
+    private EditText itemName, itemPrice, itemList;
     private Button saveBtn;
     private NumberPicker itemQnt;
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -35,6 +36,7 @@ public class AddActivity extends AppCompatActivity {
 
         itemName = findViewById(R.id.ietm_name_input);
         itemPrice = findViewById(R.id.ietm_price_input);
+        itemList = findViewById(R.id.item_list_input);
         itemQnt = findViewById(R.id.item_qnt_input);
         saveBtn = findViewById(R.id.save_btn);
         itemQnt.setMinValue(1);
@@ -47,6 +49,7 @@ public class AddActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.hasExtra(EXTRA_ID)){
             itemName.setText(intent.getStringExtra(EXTRA_NAME));
+            itemList.setText(intent.getStringExtra(EXTRA_LIST));
             itemPrice.setText(String.valueOf(intent.getDoubleExtra(EXTRA_PRICE, 1)));
             itemQnt.setValue(intent.getIntExtra(EXTRA_QNT, 1));
             saveBtn.setText("save Changes");
@@ -56,8 +59,8 @@ public class AddActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemName.getText().toString().trim().isEmpty() || itemPrice.getText().toString().trim().isEmpty()){
-                    Toast.makeText(AddActivity.this, "provide a name and a unit price for the item", Toast.LENGTH_SHORT).show();
+                if(itemName.getText().toString().trim().isEmpty() || itemPrice.getText().toString().trim().isEmpty() || itemList.getText().toString().trim().isEmpty()){
+                    Toast.makeText(AddActivity.this, "provide a name and a unit price and a list name for the item", Toast.LENGTH_SHORT).show();
                 }else if (Double.parseDouble(itemPrice.getText().toString().trim()) == 0.0) {
                     Toast.makeText(AddActivity.this, "price can't be 0.0", Toast.LENGTH_SHORT).show();
                 }else{
@@ -81,11 +84,13 @@ public class AddActivity extends AppCompatActivity {
     }
     public void saveItem(){
         String name = itemName.getText().toString().trim();
+        String listName = itemList.getText().toString().trim();
         String upperName = name.substring(0, 1).toUpperCase() + name.substring(1);
         String price = itemPrice.getText().toString().trim();
         int qnt = itemQnt.getValue();
             Intent data = new Intent();
             data.putExtra(EXTRA_NAME, upperName);
+            data.putExtra(EXTRA_LIST, listName.toLowerCase());
             data.putExtra(EXTRA_PRICE, Double.parseDouble(price));
             data.putExtra(EXTRA_QNT, qnt);
             int id = getIntent().getIntExtra(EXTRA_ID, -1);

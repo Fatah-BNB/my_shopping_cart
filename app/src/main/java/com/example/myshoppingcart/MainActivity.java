@@ -57,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        (findViewById(R.id.icon_bar)).setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, ListsActivity.class));
+        });
+
+        itemViewModel.getLists().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> lists) {
+                for(String list : lists){
+                    Toast.makeText(MainActivity.this, list, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         itemViewModel.getTotalItems().observe(this, new Observer<Integer>() {
             @Override
@@ -114,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 intent.putExtra(AddActivity.EXTRA_ID, item.getId());
                 intent.putExtra(AddActivity.EXTRA_NAME, item.getName());
+                intent.putExtra(AddActivity.EXTRA_LIST, item.getList());
                 intent.putExtra(AddActivity.EXTRA_PRICE, item.getPrice());
                 intent.putExtra(AddActivity.EXTRA_QNT, item.getQuantity());
 
@@ -127,22 +140,24 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_ITEM_REQUEST && resultCode == RESULT_OK){
             String itemName = data.getStringExtra(AddActivity.EXTRA_NAME);
-            double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
+
+            String itemListName = data.getStringExtra(AddActivity.EXTRA_LIST); double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
             int itemQnt = data.getIntExtra(AddActivity.EXTRA_QNT, 1);
 
-            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK);
+            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK, itemListName);
             itemViewModel.insertItem(item);
             Toast.makeText(this, "item added", Toast.LENGTH_SHORT).show();
         } else if(requestCode == EDIT_ITEM_REQUEST && resultCode == RESULT_OK){
             int itemId = data.getIntExtra(AddActivity.EXTRA_ID, -1);
             String itemName = data.getStringExtra(AddActivity.EXTRA_NAME);
+            String itemListName = data.getStringExtra(AddActivity.EXTRA_LIST);
             double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
             int itemQnt = data.getIntExtra(AddActivity.EXTRA_QNT, 1);
             if(itemId == -1){
                 Toast.makeText(this, "can't update item", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK);
+            Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK, itemListName);
             item.setId(itemId);
             itemViewModel.updateItem(item);
             //Toast.makeText(this, "item updated", Toast.LENGTH_SHORT).show();

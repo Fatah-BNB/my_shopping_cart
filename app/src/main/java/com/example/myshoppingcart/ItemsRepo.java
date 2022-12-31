@@ -10,6 +10,8 @@ import java.util.List;
 public class ItemsRepo {
     private ItemDao itemDao;
     private LiveData<List<Item>> allItems;
+    private LiveData<List<String>> lists;
+    private LiveData<List<Item>> itemsByLists;
     private LiveData<List<Item>> allItemsQnt;
     private LiveData<Integer> totalItems;
     private LiveData<Double> totalPrice;
@@ -20,6 +22,7 @@ public class ItemsRepo {
         allItems = itemDao.getAllItems();
         totalItems = itemDao.getTotalItems();
         totalPrice = itemDao.getTotalPrice();
+        lists = itemDao.getLists();
     }
 
     public void insert(Item item){
@@ -38,9 +41,16 @@ public class ItemsRepo {
     public LiveData<List<Item>> getAllItems() {
         return allItems;
     }
+    public LiveData<List<String>> getLists() {
+        return lists;
+    }
     public LiveData<List<Item>> getAllItemsQnt(int qnt) {
         allItemsQnt = itemDao.getAllItemsBasedOnQnt(qnt);
         return allItemsQnt;
+    }
+    public LiveData<List<Item>> getItemsByList(String list) {
+        itemsByLists = itemDao.getItemsByList(list);
+        return itemsByLists;
     }
     public LiveData<Integer> getTotalItems() {
         return totalItems;
