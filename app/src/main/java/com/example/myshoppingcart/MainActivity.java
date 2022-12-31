@@ -61,14 +61,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, ListsActivity.class));
         });
 
-        itemViewModel.getLists().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> lists) {
-                for(String list : lists){
-                    Toast.makeText(MainActivity.this, list, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         itemViewModel.getTotalItems().observe(this, new Observer<Integer>() {
             @Override
