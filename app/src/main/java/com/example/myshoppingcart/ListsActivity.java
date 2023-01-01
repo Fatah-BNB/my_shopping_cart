@@ -19,29 +19,6 @@ public class ListsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
 
-        RecyclerView listRecyclerView = findViewById(R.id.lists_recycler_view);
 
-        listRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        listRecyclerView.setHasFixedSize(true);
-
-        final ListAdapter adapter = new ListAdapter();
-        listRecyclerView.setAdapter(adapter);
-
-
-        MainActivity.itemViewModel.getLists().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(List<String> lists) {
-                adapter.setLists(lists);
-            }
-        });
-
-        adapter.setOnListClickListener(new ListAdapter.onListClickListener() {
-            @Override
-            public void onListClick(String list) {
-                Intent intent = new Intent(ListsActivity.this, ItemsListActivity.class);
-                intent.putExtra("LIST", list);
-                startActivity(intent);
-            }
-        });
     }
 }

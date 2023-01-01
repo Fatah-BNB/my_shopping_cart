@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
         final ItemAdapter adapter = new ItemAdapter();
         recyclerView.setAdapter(adapter);
 
+        findViewById(R.id.icon_bar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View vi = findViewById(R.id.lists_recycler_view);
+                int v = (vi.getVisibility() == View.GONE)? View.VISIBLE: View.GONE;
+                TransitionManager.beginDelayedTransition(findViewById(R.id.nav_bar),new AutoTransition());
+                vi.setVisibility(v);
+            }
+        });
+
+
         itemViewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
             @Override
@@ -56,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     empty.setVisibility(View.GONE);
                 }
             }
-        });
-        (findViewById(R.id.icon_bar)).setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, ListsActivity.class));
         });
 
 
@@ -123,6 +133,33 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddActivity.EXTRA_QNT, item.getQuantity());
 
                 startActivityForResult(intent, EDIT_ITEM_REQUEST);
+            }
+        });
+
+
+        RecyclerView listRecyclerView = findViewById(R.id.lists_recycler_view);
+
+        listRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        listRecyclerView.setHasFixedSize(true);
+
+
+        final ListAdapter list_adapter = new ListAdapter();
+        listRecyclerView.setAdapter(list_adapter);
+
+
+        MainActivity.itemViewModel.getLists().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> lists) {
+                list_adapter.setLists(lists);
+            }
+        });
+
+        list_adapter.setOnListClickListener(new ListAdapter.onListClickListener() {
+            @Override
+            public void onListClick(String list) {
+                Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
+                intent.putExtra("LIST", list);
+                startActivity(intent);
             }
         });
     }

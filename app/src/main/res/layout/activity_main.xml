@@ -13,46 +13,54 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_top"
         android:gravity="center_vertical"
+        android:animateLayoutChanges="true"
         android:padding="12dp"
         android:paddingStart="22dp"
         android:paddingEnd="22dp">
 
 
-        <ImageView
-            android:id="@+id/icon_bar"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            app:srcCompat="@drawable/blue_bag"
-            app:tint="@color/fancy_yellow" />
+        <RelativeLayout
+            android:id="@+id/nav_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView"
+            <ImageView
+                android:id="@+id/icon_bar"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_wallet_x"
+                app:tint="@color/fancy_yellow" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="All items"
+                android:textColor="@color/white"
+                android:textSize="26dp" />
+
+            <ImageView
+                android:id="@+id/delete_all_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_delete" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lists_recycler_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shopping Cart"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"
-            android:textSize="26dp" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.3"
+            android:layout_below="@+id/nav_container"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
             android:visibility="gone"
-            app:dividerColor="@color/black" />
+            tools:listitem="@layout/list" />
 
-        <ImageView
-            android:id="@+id/delete_all_btn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_delete" />
 
     </RelativeLayout>
 
