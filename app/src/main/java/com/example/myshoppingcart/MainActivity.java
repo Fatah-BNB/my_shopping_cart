@@ -157,10 +157,22 @@ public class MainActivity extends AppCompatActivity {
         list_adapter.setOnListClickListener(new ListAdapter.onListClickListener() {
             @Override
             public void onListClick(String list) {
-                Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
-                intent.putExtra("LIST", list);
-                startActivity(intent);
+                itemViewModel.getItemsByList(list).observe(MainActivity.this, new Observer<List<Item>>() {
+                    @Override
+                    public void onChanged(List<Item> items) {
+                        adapter.setItems(items);
+                    }
+                });
             }
+        });
+
+        findViewById(R.id.all_items).setOnClickListener(view -> {
+            itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+                @Override
+                public void onChanged(List<Item> items) {
+                    adapter.setItems(items);
+                }
+            });
         });
     }
 
