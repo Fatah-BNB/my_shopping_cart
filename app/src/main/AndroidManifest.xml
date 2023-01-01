@@ -10,12 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShoppingCart">
         <activity
-            android:name=".ItemsListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ListsActivity"
-            android:exported="false" />
-        <activity
             android:name=".AddActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
