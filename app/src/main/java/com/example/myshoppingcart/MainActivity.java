@@ -169,6 +169,14 @@ public class MainActivity extends AppCompatActivity {
                                 totalPrice.setText(" ∙ "+price+" DA");
                             }
                         });
+                        itemViewModel.getTotalItemsByList(list).observe(MainActivity.this, new Observer<Integer>() {
+                            @Override
+                            public void onChanged(Integer total) {
+                                if(total == 0){totalItems.setText("No items");}
+                                else if (total == 1){totalItems.setText("One item");}
+                                else{totalItems.setText(String.valueOf(total)+" items");}
+                            }
+                        });
                     }
                 });
             }
@@ -184,6 +192,14 @@ public class MainActivity extends AppCompatActivity {
                         public void onChanged(Double price) {
                             if (price == null){price = 0.0;}
                             totalPrice.setText(" ∙ "+price+" DA");
+                        }
+                    });
+                    itemViewModel.getTotalItems().observe(MainActivity.this, new Observer<Integer>() {
+                        @Override
+                        public void onChanged(Integer total) {
+                            if(total == 0){totalItems.setText("No items");}
+                            else if (total == 1){totalItems.setText("One item");}
+                            else{totalItems.setText(String.valueOf(total)+" items");}
                         }
                     });
                 }
