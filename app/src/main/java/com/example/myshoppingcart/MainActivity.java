@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddActivity.EXTRA_LIST, item.getList());
                 intent.putExtra(AddActivity.EXTRA_PRICE, item.getPrice());
                 intent.putExtra(AddActivity.EXTRA_QNT, item.getQuantity());
+                intent.putExtra(AddActivity.EXTRA_COUNTED, item.isCounted());
 
                 startActivityForResult(intent, EDIT_ITEM_REQUEST);
             }
@@ -194,12 +195,14 @@ public class MainActivity extends AppCompatActivity {
             String itemListName = data.getStringExtra(AddActivity.EXTRA_LIST);
             double itemPrice = data.getDoubleExtra(AddActivity.EXTRA_PRICE, 1);
             int itemQnt = data.getIntExtra(AddActivity.EXTRA_QNT, 1);
+            boolean counted = data.getBooleanExtra(AddActivity.EXTRA_COUNTED, true);
             if(itemId == -1){
                 Toast.makeText(this, "can't update item", Toast.LENGTH_SHORT).show();
                 return;
             }
             Item item = new Item(itemName, itemQnt, itemPrice, Color.BLACK, itemListName);
             item.setId(itemId);
+            item.setCounted(counted);
             itemViewModel.updateItem(item);
             //Toast.makeText(this, "item updated", Toast.LENGTH_SHORT).show();
         } else{

@@ -25,9 +25,11 @@ public class AddActivity extends AppCompatActivity {
     public static final String EXTRA_QNT = "ITEM_QNT";
     public static final String EXTRA_PRICE = "ITEM_PRICE";
     public static final String EXTRA_LIST = "ITEM_LIST";
+    public static final String EXTRA_COUNTED = "ITEM_COUNTED";
     private EditText itemName, itemPrice, itemList;
     private Button saveBtn;
     private NumberPicker itemQnt;
+    private Intent intent;
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class AddActivity extends AppCompatActivity {
         itemQnt.setTextSize(100);
         itemQnt.setDividerPadding(50);
 
-        Intent intent = getIntent();
+        intent = getIntent();
         if(intent.hasExtra(EXTRA_ID)){
             itemName.setText(intent.getStringExtra(EXTRA_NAME));
             itemList.setText(intent.getStringExtra(EXTRA_LIST));
@@ -93,6 +95,7 @@ public class AddActivity extends AppCompatActivity {
             data.putExtra(EXTRA_LIST, listName.toLowerCase());
             data.putExtra(EXTRA_PRICE, Double.parseDouble(price));
             data.putExtra(EXTRA_QNT, qnt);
+            data.putExtra(EXTRA_COUNTED, intent.getBooleanExtra(EXTRA_COUNTED, true));
             int id = getIntent().getIntExtra(EXTRA_ID, -1);
             if(id != -1){
                 data.putExtra(EXTRA_ID, id);
