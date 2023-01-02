@@ -162,6 +162,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(List<Item> items) {
                         adapter.setItems(items);
+                        itemViewModel.getTotalPriceByList(list).observe(MainActivity.this, new Observer<Double>() {
+                            @Override
+                            public void onChanged(Double price) {
+                                totalPrice.setText(" ∙ "+price+" DA");
+                            }
+                        });
                     }
                 });
             }
@@ -172,6 +178,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(List<Item> items) {
                     adapter.setItems(items);
+                    itemViewModel.getTotalPrice().observe(MainActivity.this, new Observer<Double>() {
+                        @Override
+                        public void onChanged(Double price) {
+                            totalPrice.setText(" ∙ "+price+" DA");
+                        }
+                    });
                 }
             });
         });

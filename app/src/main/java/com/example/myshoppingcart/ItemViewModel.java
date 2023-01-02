@@ -16,6 +16,7 @@ public class ItemViewModel extends AndroidViewModel {
     private LiveData<List<Item>> allItemsQnt;
     private LiveData<Integer> totalItems;
     private LiveData<Double> totalPrice;
+    private LiveData<Double> totalPricList;
 
     public ItemViewModel(@NonNull Application application) {
         super(application);
@@ -56,5 +57,9 @@ public class ItemViewModel extends AndroidViewModel {
     }
     public LiveData<Double> getTotalPrice() {
         return totalPrice;
+    }
+    public LiveData<Double> getTotalPriceByList(String list) {
+        totalPricList = repository.getTotalPriceByList(list);
+        return totalPricList;
     }
 }

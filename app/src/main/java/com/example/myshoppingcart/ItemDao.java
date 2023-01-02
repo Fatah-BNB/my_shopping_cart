@@ -31,4 +31,7 @@ public interface ItemDao {
     LiveData<Integer> getTotalItems();
     @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted")
     LiveData<Double> getTotalPrice();
+    @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted and list = :list")
+    LiveData<Double> getTotalByList(String list);
+
 }

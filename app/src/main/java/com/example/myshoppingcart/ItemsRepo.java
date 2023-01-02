@@ -15,6 +15,7 @@ public class ItemsRepo {
     private LiveData<List<Item>> allItemsQnt;
     private LiveData<Integer> totalItems;
     private LiveData<Double> totalPrice;
+    private LiveData<Double> totalPriceList;
 
     public ItemsRepo(Application application){
         ItemsDatabase database = ItemsDatabase.getInstance(application);
@@ -57,6 +58,10 @@ public class ItemsRepo {
     }
     public LiveData<Double> getTotalPrice() {
         return totalPrice;
+    }
+    public LiveData<Double> getTotalPriceByList(String list) {
+        totalPriceList = itemDao.getTotalByList(list);
+        return totalPriceList;
     }
 
     private static class InsertAsync extends AsyncTask<Item, Void, Void>{
