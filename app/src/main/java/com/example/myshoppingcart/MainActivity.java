@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         itemViewModel.getTotalPriceByList(list).observe(MainActivity.this, new Observer<Double>() {
                             @Override
                             public void onChanged(Double price) {
+                                if (price == null){price = 0.0;}
                                 totalPrice.setText(" ∙ "+price+" DA");
                             }
                         });
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     itemViewModel.getTotalPrice().observe(MainActivity.this, new Observer<Double>() {
                         @Override
                         public void onChanged(Double price) {
+                            if (price == null){price = 0.0;}
                             totalPrice.setText(" ∙ "+price+" DA");
                         }
                     });
