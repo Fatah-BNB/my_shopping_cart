@@ -27,13 +27,13 @@ public interface ItemDao {
     LiveData<List<Item>> getItemsByList(String list);
     @Query("SELECT * FROM items_table WHERE quantity = :qnt")
     LiveData<List<Item>> getAllItemsBasedOnQnt(int qnt);
-    @Query("SELECT COUNT(*) FROM items_table")
+    @Query("SELECT COUNT(*) FROM items_table where not isDone")
     LiveData<Integer> getTotalItems();
-    @Query("SELECT COUNT(*) FROM items_table where list = :list")
+    @Query("SELECT COUNT(*) FROM items_table where not isDone and list = :list")
     LiveData<Integer> getTotalItemsByList(String list);
-    @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted")
+    @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted and not isDone")
     LiveData<Double> getTotalPrice();
-    @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted and list = :list")
+    @Query("SELECT SUM(quantity * price) FROM items_table WHERE isCounted and not isDone and list = :list")
     LiveData<Double> getTotalByList(String list);
 
 }

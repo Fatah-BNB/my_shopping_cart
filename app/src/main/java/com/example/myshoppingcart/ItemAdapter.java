@@ -36,6 +36,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
         }else{
             holder.ignoredBadge.setVisibility(View.VISIBLE);
         }
+        if (currentItem.isDone()){
+            holder.itemCard.setBackgroundColor(Color.DKGRAY);
+        }else{
+            holder.itemCard.setBackgroundColor(Color.BLACK);
+        }
 //        holder.itemPrice.setText(String.valueOf(currentItem.getPrice())+" DA");
         holder.itemQnt.setText(String.valueOf(currentItem.getQuantity()));
         holder.itemTotalPrice.setText(String.valueOf(currentItem.getTotalPrice())+" DA");
@@ -55,6 +60,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
                     else {currentItem.setCounted(true); holder.ignoredBadge.setVisibility(View.GONE);}
                     MainActivity.itemViewModel.updateItem(currentItem);
                 });
+        holder.dots.setOnClickListener(view -> {
+            if (currentItem.isDone()){currentItem.setDone(false);holder.itemCard.setBackgroundColor(Color.DKGRAY);
+            }
+            else {currentItem.setDone(true);holder.itemCard.setBackgroundColor(Color.BLACK);
+            }
+            MainActivity.itemViewModel.updateItem(currentItem);
+        });
     }
 
     @Override
