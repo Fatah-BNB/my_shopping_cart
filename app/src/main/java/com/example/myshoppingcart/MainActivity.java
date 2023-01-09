@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.itemViewModel.getLists().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> lists) {
+                lists.add("all");
                 list_adapter.setLists(lists);
             }
         });
@@ -158,52 +159,84 @@ public class MainActivity extends AppCompatActivity {
         list_adapter.setOnListClickListener(new ListAdapter.onListClickListener() {
             @Override
             public void onListClick(String list) {
-                itemViewModel.getItemsByList(list).observe(MainActivity.this, new Observer<List<Item>>() {
-                    @Override
-                    public void onChanged(List<Item> items) {
-                        adapter.setItems(items);
-                        itemViewModel.getTotalPriceByList(list).observe(MainActivity.this, new Observer<Double>() {
-                            @Override
-                            public void onChanged(Double price) {
-                                if (price == null){price = 0.0;}
-                                totalPrice.setText(" ∙ "+price+" DA");
-                            }
-                        });
-                        itemViewModel.getTotalItemsByList(list).observe(MainActivity.this, new Observer<Integer>() {
-                            @Override
-                            public void onChanged(Integer total) {
-                                if(total == 0){totalItems.setText("No items");}
-                                else if (total == 1){totalItems.setText("One item");}
-                                else{totalItems.setText(String.valueOf(total)+" items");}
-                            }
-                        });
-                    }
-                });
+                TextView allItmes = findViewById(R.id.all_items);
+                allItmes.setText(list);
+                if (list.equals("all")){
+                    itemViewModel.getAllItems().observe(MainActivity.this, new Observer<List<Item>>() {
+                        @Override
+                        public void onChanged(List<Item> items) {
+                            adapter.setItems(items);
+                            itemViewModel.getTotalPrice().observe(MainActivity.this, new Observer<Double>() {
+                                @Override
+                                public void onChanged(Double price) {
+                                    if (price == null){price = 0.0;}
+                                    totalPrice.setText(" ∙ "+price+" DA");
+                                }
+                            });
+                            itemViewModel.getTotalItems().observe(MainActivity.this, new Observer<Integer>() {
+                                @Override
+                                public void onChanged(Integer total) {
+                                    if(total == 0){totalItems.setText("No items");}
+                                    else if (total == 1){totalItems.setText("One item");}
+                                    else{totalItems.setText(String.valueOf(total)+" items");}
+                                }
+                            });
+                        }
+                    });
+                }else {
+                    itemViewModel.getItemsByList(list).observe(MainActivity.this, new Observer<List<Item>>() {
+                        @Override
+                        public void onChanged(List<Item> items) {
+                            adapter.setItems(items);
+                            itemViewModel.getTotalPriceByList(list).observe(MainActivity.this, new Observer<Double>() {
+                                @Override
+                                public void onChanged(Double price) {
+                                    if (price == null) {
+                                        price = 0.0;
+                                    }
+                                    totalPrice.setText(" ∙ " + price + " DA");
+                                }
+                            });
+                            itemViewModel.getTotalItemsByList(list).observe(MainActivity.this, new Observer<Integer>() {
+                                @Override
+                                public void onChanged(Integer total) {
+                                    if (total == 0) {
+                                        totalItems.setText("No items");
+                                    } else if (total == 1) {
+                                        totalItems.setText("One item");
+                                    } else {
+                                        totalItems.setText(String.valueOf(total) + " items");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
 
         findViewById(R.id.all_items).setOnClickListener(view -> {
-            itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
-                @Override
-                public void onChanged(List<Item> items) {
-                    adapter.setItems(items);
-                    itemViewModel.getTotalPrice().observe(MainActivity.this, new Observer<Double>() {
-                        @Override
-                        public void onChanged(Double price) {
-                            if (price == null){price = 0.0;}
-                            totalPrice.setText(" ∙ "+price+" DA");
-                        }
-                    });
-                    itemViewModel.getTotalItems().observe(MainActivity.this, new Observer<Integer>() {
-                        @Override
-                        public void onChanged(Integer total) {
-                            if(total == 0){totalItems.setText("No items");}
-                            else if (total == 1){totalItems.setText("One item");}
-                            else{totalItems.setText(String.valueOf(total)+" items");}
-                        }
-                    });
-                }
-            });
+//            itemViewModel.getAllItems().observe(this, new Observer<List<Item>>() {
+//                @Override
+//                public void onChanged(List<Item> items) {
+//                    adapter.setItems(items);
+//                    itemViewModel.getTotalPrice().observe(MainActivity.this, new Observer<Double>() {
+//                        @Override
+//                        public void onChanged(Double price) {
+//                            if (price == null){price = 0.0;}
+//                            totalPrice.setText(" ∙ "+price+" DA");
+//                        }
+//                    });
+//                    itemViewModel.getTotalItems().observe(MainActivity.this, new Observer<Integer>() {
+//                        @Override
+//                        public void onChanged(Integer total) {
+//                            if(total == 0){totalItems.setText("No items");}
+//                            else if (total == 1){totalItems.setText("One item");}
+//                            else{totalItems.setText(String.valueOf(total)+" items");}
+//                        }
+//                    });
+//                }
+//            });
         });
     }
 
